@@ -1,24 +1,45 @@
 <script>
-    import { onMount } from "svelte";
-    
-    let backendData = "正在请求后端...";
-    
-    onMount(() => {
-        fetch("/api/core/hello")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`网络响应不正常 (${response.status})`);
-                }
-                return response.text();
-            })
-            .then((text) => {
-                backendData = text;
-            })
-            .catch((error) => {
-                backendData = `无法从后端加载数据: ${error.message}`;
-            });
-    });
+  import { onMount } from "svelte";
+
+  let backendStatus = "正在请求后端……";
+  let backendMessage = "";
+  let timestamp = "";
+
+  onMount(() => {
+    fetch("/api/status", {
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        backendStatus = data.status;
+        backendMessage = data.message;
+        timestamp = data.timestamp;
+      })
+      .catch((error) => {
+        backendStatus = `error(${error.message})`;
+      });
+  });
 </script>
 
-<p class="text-3xl font-bold">后端请求测试:</p>
-<p class="text-3xl underline">{backendData}</p>
+<p class="text-2xl">
+  <span class="font-bold">后端状态：</span>
+  <span class="underline">{backendStatus}</span>
+</p>
+
+{#if backendMessage}
+  <p class="text-2xl">
+    <span class="font-bold">消息：</span>
+    <span class="underline">{backendMessage}</span>
+  </p>
+  <p class="text-2xl">
+    <span class="font-bold">时间：</span>
+    <span class="underline">{timestamp}</span>
+  </p>
+{/if}
