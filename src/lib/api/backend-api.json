@@ -1,0 +1,106 @@
+{
+  "components": {
+    "schemas": {
+      "ErrorDetailSchema": {
+        "description": "错误详情",
+        "properties": {
+          "field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "错误字段",
+            "title": "Field"
+          },
+          "message": {
+            "description": "错误信息",
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "title": "ErrorDetailSchema",
+        "type": "object"
+      },
+      "OutSchema_str_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "响应数据",
+            "title": "Data"
+          },
+          "errors": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ErrorDetailSchema"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "错误详情",
+            "title": "Errors"
+          },
+          "message": {
+            "default": "success",
+            "description": "消息",
+            "title": "Message",
+            "type": "string"
+          },
+          "timestamp": {
+            "description": "时间戳",
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          }
+        },
+        "title": "OutSchema[str]",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "",
+    "title": "NinjaExtraAPI",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/status": {
+      "get": {
+        "description": "用于连通测试和基础状态检查，返回服务基本状态信息。",
+        "operationId": "core_endpoints_get_status",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_str_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "获取服务状态信息",
+        "tags": ["核心"]
+      }
+    }
+  },
+  "servers": []
+}
