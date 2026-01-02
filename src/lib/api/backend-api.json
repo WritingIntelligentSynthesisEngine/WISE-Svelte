@@ -17,13 +17,66 @@
             "title": "Is Active",
             "type": "boolean"
           },
+          "is_staff": {
+            "title": "Is Staff",
+            "type": "boolean"
+          },
+          "is_superuser": {
+            "title": "Is Superuser",
+            "type": "boolean"
+          },
+          "last_login": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Login"
+          },
+          "profile_image_path": {
+            "title": "Profile Image Path",
+            "type": "string"
+          },
           "username": {
             "title": "Username",
             "type": "string"
           }
         },
-        "required": ["username", "email", "is_active", "date_joined"],
+        "required": ["last_login", "is_superuser", "username", "email", "is_staff", "is_active", "date_joined", "profile_image_path"],
         "title": "AccountOutSchema",
+        "type": "object"
+      },
+      "AccountUpdateInSchema": {
+        "description": "更新账户信息时输入",
+        "properties": {
+          "api_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Api Key"
+          },
+          "username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          }
+        },
+        "title": "AccountUpdateInSchema",
         "type": "object"
       },
       "BookCreateInSchema": {
@@ -50,6 +103,17 @@
             "default": "无",
             "title": "Description",
             "type": "string"
+          },
+          "settings": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settings"
           },
           "title": {
             "title": "Title",
@@ -95,6 +159,17 @@
           "id": {
             "title": "Id",
             "type": "integer"
+          },
+          "settings": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settings"
           },
           "status": {
             "title": "Status",
@@ -151,6 +226,17 @@
             ],
             "title": "Description"
           },
+          "settings": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settings"
+          },
           "title": {
             "anyOf": [
               {
@@ -181,6 +267,17 @@
             },
             "title": "Content",
             "type": "array"
+          },
+          "outline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outline"
           },
           "title": {
             "title": "Title",
@@ -218,6 +315,17 @@
           "id": {
             "title": "Id",
             "type": "integer"
+          },
+          "outline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outline"
           },
           "status": {
             "title": "Status",
@@ -266,7 +374,7 @@
             ],
             "title": "Content"
           },
-          "status": {
+          "outline": {
             "anyOf": [
               {
                 "type": "string"
@@ -275,7 +383,7 @@
                 "type": "null"
               }
             ],
-            "title": "Status"
+            "title": "Outline"
           },
           "title": {
             "anyOf": [
@@ -328,6 +436,27 @@
         },
         "required": ["message"],
         "title": "ErrorDetailSchema",
+        "type": "object"
+      },
+      "GenerateOutlineInSchema": {
+        "description": "生成大纲时的输入",
+        "properties": {
+          "book_id": {
+            "title": "Book Id",
+            "type": "integer"
+          },
+          "chapter_number": {
+            "title": "Chapter Number",
+            "type": "integer"
+          },
+          "context_size": {
+            "default": 3,
+            "title": "Context Size",
+            "type": "integer"
+          }
+        },
+        "required": ["book_id", "chapter_number"],
+        "title": "GenerateOutlineInSchema",
         "type": "object"
       },
       "JwtOutSchema": {
@@ -538,6 +667,54 @@
         "title": "OutSchema[JwtOutSchema]",
         "type": "object"
       },
+      "OutSchema_List_AccountOutSchema__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AccountOutSchema"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "响应数据",
+            "title": "Data"
+          },
+          "errors": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ErrorDetailSchema"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "错误详情",
+            "title": "Errors"
+          },
+          "message": {
+            "default": "success",
+            "description": "消息",
+            "title": "Message",
+            "type": "string"
+          },
+          "timestamp": {
+            "description": "时间戳",
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          }
+        },
+        "title": "OutSchema[List[AccountOutSchema]]",
+        "type": "object"
+      },
       "OutSchema_List_BookOutSchema__": {
         "properties": {
           "data": {
@@ -672,6 +849,50 @@
         "title": "OutSchema[NoneType]",
         "type": "object"
       },
+      "OutSchema_SensitiveAccountOutSchema_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SensitiveAccountOutSchema"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "响应数据"
+          },
+          "errors": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ErrorDetailSchema"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "错误详情",
+            "title": "Errors"
+          },
+          "message": {
+            "default": "success",
+            "description": "消息",
+            "title": "Message",
+            "type": "string"
+          },
+          "timestamp": {
+            "description": "时间戳",
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          }
+        },
+        "title": "OutSchema[SensitiveAccountOutSchema]",
+        "type": "object"
+      },
       "OutSchema_str_": {
         "properties": {
           "data": {
@@ -756,6 +977,64 @@
         },
         "required": ["username", "email", "password", "password_confirm"],
         "title": "RegisterInSchema",
+        "type": "object"
+      },
+      "SensitiveAccountOutSchema": {
+        "description": "敏感账户信息输出",
+        "properties": {
+          "api_key": {
+            "title": "Api Key",
+            "type": "string"
+          },
+          "balance": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Balance",
+            "type": "string"
+          },
+          "date_joined": {
+            "format": "date-time",
+            "title": "Date Joined",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "is_staff": {
+            "title": "Is Staff",
+            "type": "boolean"
+          },
+          "is_superuser": {
+            "title": "Is Superuser",
+            "type": "boolean"
+          },
+          "last_login": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Login"
+          },
+          "profile_image_path": {
+            "title": "Profile Image Path",
+            "type": "string"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string"
+          }
+        },
+        "required": ["last_login", "is_superuser", "username", "email", "is_staff", "is_active", "date_joined", "profile_image_path", "balance", "api_key"],
+        "title": "SensitiveAccountOutSchema",
         "type": "object"
       }
     },
@@ -845,6 +1124,46 @@
       }
     },
     "/api/accounts": {
+      "get": {
+        "description": "获取账户信息列表, 支持分页",
+        "operationId": "account_endpoints_get_accounts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_List_AccountOutSchema__"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "获取账户信息列表",
+        "tags": ["账户"]
+      },
       "post": {
         "description": "注册账户, 如果用户已存在但未激活, 则更新用户信息",
         "operationId": "account_endpoints_register",
@@ -873,6 +1192,213 @@
         },
         "summary": "注册账户",
         "tags": ["账户"]
+      }
+    },
+    "/api/accounts/me": {
+      "get": {
+        "description": "获取当前账户信息, 会输出敏感信息",
+        "operationId": "account_endpoints_get_my_account",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_SensitiveAccountOutSchema_"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "OptionalAuth": []
+          }
+        ],
+        "summary": "获取当前账户信息",
+        "tags": ["账户"]
+      },
+      "patch": {
+        "description": "更新当前账户信息",
+        "operationId": "account_endpoints_update_my_account",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountUpdateInSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_SensitiveAccountOutSchema_"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OptionalAuth": []
+          }
+        ],
+        "summary": "更新当前账户信息",
+        "tags": ["账户"]
+      }
+    },
+    "/api/accounts/other/{username}": {
+      "get": {
+        "description": "获取特定账户信息, 不会输出敏感信息",
+        "operationId": "account_endpoints_get_account",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "title": "Username",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_AccountOutSchema_"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "summary": "获取账户信息",
+        "tags": ["账户"]
+      }
+    },
+    "/api/aitools/generate-outline-tool": {
+      "post": {
+        "description": "生成书籍大纲(流式)",
+        "operationId": "ai_endpoints_generate_outline",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateOutlineInSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutSchema_NoneType_"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OptionalAuth": []
+          }
+        ],
+        "summary": "生成书籍大纲",
+        "tags": ["AI"]
       }
     },
     "/api/books": {

@@ -4,6 +4,8 @@
  * NinjaExtraAPI
  * OpenAPI spec version: 1.0.0
  */
+export type AccountOutSchemaLastLogin = string | null;
+
 /**
  * 账户信息输出
  */
@@ -11,12 +13,30 @@ export interface AccountOutSchema {
   date_joined: string;
   email: string;
   is_active: boolean;
+  is_staff: boolean;
+  is_superuser: boolean;
+  last_login: AccountOutSchemaLastLogin;
+  profile_image_path: string;
   username: string;
+}
+
+export type AccountUpdateInSchemaApiKey = string | null;
+
+export type AccountUpdateInSchemaUsername = string | null;
+
+/**
+ * 更新账户信息时输入
+ */
+export interface AccountUpdateInSchema {
+  api_key?: AccountUpdateInSchemaApiKey;
+  username?: AccountUpdateInSchemaUsername;
 }
 
 export type BookCreateInSchemaAttributes = { [key: string]: unknown };
 
 export type BookCreateInSchemaCategoryId = number | null;
+
+export type BookCreateInSchemaSettings = string | null;
 
 /**
  * 创建书籍时的输入
@@ -25,12 +45,15 @@ export interface BookCreateInSchema {
   attributes?: BookCreateInSchemaAttributes;
   category_id?: BookCreateInSchemaCategoryId;
   description?: string;
+  settings?: BookCreateInSchemaSettings;
   title: string;
 }
 
 export type BookOutSchemaAttributes = { [key: string]: unknown };
 
 export type BookOutSchemaCategoryId = number | null;
+
+export type BookOutSchemaSettings = string | null;
 
 /**
  * 完整书籍的输出
@@ -42,6 +65,7 @@ export interface BookOutSchema {
   create_time: string;
   description: string;
   id: number;
+  settings?: BookOutSchemaSettings;
   status: string;
   title: string;
   update_time: string;
@@ -55,6 +79,8 @@ export type BookUpdateInSchemaCategoryId = number | null;
 
 export type BookUpdateInSchemaDescription = string | null;
 
+export type BookUpdateInSchemaSettings = string | null;
+
 export type BookUpdateInSchemaTitle = string | null;
 
 /**
@@ -64,10 +90,13 @@ export interface BookUpdateInSchema {
   attributes?: BookUpdateInSchemaAttributes;
   category_id?: BookUpdateInSchemaCategoryId;
   description?: BookUpdateInSchemaDescription;
+  settings?: BookUpdateInSchemaSettings;
   title?: BookUpdateInSchemaTitle;
 }
 
 export type ChapterCreateInSchemaContentItem = { [key: string]: unknown };
+
+export type ChapterCreateInSchemaOutline = string | null;
 
 /**
  * 创建章节时的输入
@@ -75,10 +104,13 @@ export type ChapterCreateInSchemaContentItem = { [key: string]: unknown };
 export interface ChapterCreateInSchema {
   chapter_number: number;
   content?: ChapterCreateInSchemaContentItem[];
+  outline?: ChapterCreateInSchemaOutline;
   title: string;
 }
 
 export type ChapterOutSchemaContentItem = { [key: string]: unknown };
+
+export type ChapterOutSchemaOutline = string | null;
 
 /**
  * 完整章节的输出
@@ -89,6 +121,7 @@ export interface ChapterOutSchema {
   content: ChapterOutSchemaContentItem[];
   create_time: string;
   id: number;
+  outline?: ChapterOutSchemaOutline;
   status: string;
   title: string;
   update_time: string;
@@ -100,7 +133,7 @@ export type ChapterUpdateInSchemaContentAnyOfItem = { [key: string]: unknown };
 
 export type ChapterUpdateInSchemaContent = ChapterUpdateInSchemaContentAnyOfItem[] | null;
 
-export type ChapterUpdateInSchemaStatus = string | null;
+export type ChapterUpdateInSchemaOutline = string | null;
 
 export type ChapterUpdateInSchemaTitle = string | null;
 
@@ -110,7 +143,7 @@ export type ChapterUpdateInSchemaTitle = string | null;
 export interface ChapterUpdateInSchema {
   chapter_number?: ChapterUpdateInSchemaChapterNumber;
   content?: ChapterUpdateInSchemaContent;
-  status?: ChapterUpdateInSchemaStatus;
+  outline?: ChapterUpdateInSchemaOutline;
   title?: ChapterUpdateInSchemaTitle;
 }
 
@@ -134,6 +167,15 @@ export interface ErrorDetailSchema {
   field?: ErrorDetailSchemaField;
   /** 错误信息 */
   message: string;
+}
+
+/**
+ * 生成大纲时的输入
+ */
+export interface GenerateOutlineInSchema {
+  book_id: number;
+  chapter_number: number;
+  context_size?: number;
 }
 
 /**
@@ -239,6 +281,27 @@ export interface OutSchemaJwtOutSchema {
 /**
  * 响应数据
  */
+export type OutSchemaListAccountOutSchemaData = AccountOutSchema[] | null;
+
+/**
+ * 错误详情
+ */
+export type OutSchemaListAccountOutSchemaErrors = ErrorDetailSchema[] | null;
+
+export interface OutSchemaListAccountOutSchema {
+  /** 响应数据 */
+  data?: OutSchemaListAccountOutSchemaData;
+  /** 错误详情 */
+  errors?: OutSchemaListAccountOutSchemaErrors;
+  /** 消息 */
+  message?: string;
+  /** 时间戳 */
+  timestamp?: string;
+}
+
+/**
+ * 响应数据
+ */
 export type OutSchemaListBookOutSchemaData = BookOutSchema[] | null;
 
 /**
@@ -297,6 +360,27 @@ export interface OutSchemaNoneType {
 /**
  * 响应数据
  */
+export type OutSchemaSensitiveAccountOutSchemaData = SensitiveAccountOutSchema | null;
+
+/**
+ * 错误详情
+ */
+export type OutSchemaSensitiveAccountOutSchemaErrors = ErrorDetailSchema[] | null;
+
+export interface OutSchemaSensitiveAccountOutSchema {
+  /** 响应数据 */
+  data?: OutSchemaSensitiveAccountOutSchemaData;
+  /** 错误详情 */
+  errors?: OutSchemaSensitiveAccountOutSchemaErrors;
+  /** 消息 */
+  message?: string;
+  /** 时间戳 */
+  timestamp?: string;
+}
+
+/**
+ * 响应数据
+ */
 export type OutSchemaStrData = string | null;
 
 /**
@@ -332,6 +416,30 @@ export interface RegisterInSchema {
   password_confirm: string;
   username: string;
 }
+
+export type SensitiveAccountOutSchemaLastLogin = string | null;
+
+/**
+ * 敏感账户信息输出
+ */
+export interface SensitiveAccountOutSchema {
+  api_key: string;
+  /** @pattern ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$ */
+  balance: string;
+  date_joined: string;
+  email: string;
+  is_active: boolean;
+  is_staff: boolean;
+  is_superuser: boolean;
+  last_login: SensitiveAccountOutSchemaLastLogin;
+  profile_image_path: string;
+  username: string;
+}
+
+export type AccountEndpointsGetAccountsParams = {
+  page?: number;
+  page_size?: number;
+};
 
 export type BookEndpointsGetBooksParams = {
   page?: number;
@@ -412,6 +520,46 @@ export const accountEndpointsAccountVerifyConfirm = async (uidb64: string, token
 };
 
 /**
+ * 获取账户信息列表, 支持分页
+ * @summary 获取账户信息列表
+ */
+export type accountEndpointsGetAccountsResponse200 = {
+  data: OutSchemaListAccountOutSchema;
+  status: 200;
+};
+
+export type accountEndpointsGetAccountsResponseSuccess = accountEndpointsGetAccountsResponse200 & {
+  headers: Headers;
+};
+export type accountEndpointsGetAccountsResponse = accountEndpointsGetAccountsResponseSuccess;
+
+export const getAccountEndpointsGetAccountsUrl = (params?: AccountEndpointsGetAccountsParams) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/accounts?${stringifiedParams}` : `/api/accounts`;
+};
+
+export const accountEndpointsGetAccounts = async (params?: AccountEndpointsGetAccountsParams, options?: RequestInit): Promise<accountEndpointsGetAccountsResponse> => {
+  const res = await fetch(getAccountEndpointsGetAccountsUrl(params), {
+    ...options,
+    method: "GET",
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: accountEndpointsGetAccountsResponse["data"] = body ? JSON.parse(body) : {};
+  return { data, status: res.status, headers: res.headers } as accountEndpointsGetAccountsResponse;
+};
+
+/**
  * 注册账户, 如果用户已存在但未激活, 则更新用户信息
  * @summary 注册账户
  */
@@ -441,6 +589,186 @@ export const accountEndpointsRegister = async (registerInSchema: RegisterInSchem
 
   const data: accountEndpointsRegisterResponse["data"] = body ? JSON.parse(body) : {};
   return { data, status: res.status, headers: res.headers } as accountEndpointsRegisterResponse;
+};
+
+/**
+ * 获取当前账户信息, 会输出敏感信息
+ * @summary 获取当前账户信息
+ */
+export type accountEndpointsGetMyAccountResponse200 = {
+  data: OutSchemaSensitiveAccountOutSchema;
+  status: 200;
+};
+
+export type accountEndpointsGetMyAccountResponse404 = {
+  data: OutSchemaNoneType;
+  status: 404;
+};
+
+export type accountEndpointsGetMyAccountResponseSuccess = accountEndpointsGetMyAccountResponse200 & {
+  headers: Headers;
+};
+export type accountEndpointsGetMyAccountResponseError = accountEndpointsGetMyAccountResponse404 & {
+  headers: Headers;
+};
+
+export type accountEndpointsGetMyAccountResponse = accountEndpointsGetMyAccountResponseSuccess | accountEndpointsGetMyAccountResponseError;
+
+export const getAccountEndpointsGetMyAccountUrl = () => {
+  return `/api/accounts/me`;
+};
+
+export const accountEndpointsGetMyAccount = async (options?: RequestInit): Promise<accountEndpointsGetMyAccountResponse> => {
+  const res = await fetch(getAccountEndpointsGetMyAccountUrl(), {
+    ...options,
+    method: "GET",
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: accountEndpointsGetMyAccountResponse["data"] = body ? JSON.parse(body) : {};
+  return { data, status: res.status, headers: res.headers } as accountEndpointsGetMyAccountResponse;
+};
+
+/**
+ * 更新当前账户信息
+ * @summary 更新当前账户信息
+ */
+export type accountEndpointsUpdateMyAccountResponse200 = {
+  data: OutSchemaSensitiveAccountOutSchema;
+  status: 200;
+};
+
+export type accountEndpointsUpdateMyAccountResponse400 = {
+  data: OutSchemaNoneType;
+  status: 400;
+};
+
+export type accountEndpointsUpdateMyAccountResponse403 = {
+  data: OutSchemaNoneType;
+  status: 403;
+};
+
+export type accountEndpointsUpdateMyAccountResponseSuccess = accountEndpointsUpdateMyAccountResponse200 & {
+  headers: Headers;
+};
+export type accountEndpointsUpdateMyAccountResponseError = (accountEndpointsUpdateMyAccountResponse400 | accountEndpointsUpdateMyAccountResponse403) & {
+  headers: Headers;
+};
+
+export type accountEndpointsUpdateMyAccountResponse = accountEndpointsUpdateMyAccountResponseSuccess | accountEndpointsUpdateMyAccountResponseError;
+
+export const getAccountEndpointsUpdateMyAccountUrl = () => {
+  return `/api/accounts/me`;
+};
+
+export const accountEndpointsUpdateMyAccount = async (accountUpdateInSchema: AccountUpdateInSchema, options?: RequestInit): Promise<accountEndpointsUpdateMyAccountResponse> => {
+  const res = await fetch(getAccountEndpointsUpdateMyAccountUrl(), {
+    ...options,
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(accountUpdateInSchema),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: accountEndpointsUpdateMyAccountResponse["data"] = body ? JSON.parse(body) : {};
+  return { data, status: res.status, headers: res.headers } as accountEndpointsUpdateMyAccountResponse;
+};
+
+/**
+ * 获取特定账户信息, 不会输出敏感信息
+ * @summary 获取账户信息
+ */
+export type accountEndpointsGetAccountResponse200 = {
+  data: OutSchemaAccountOutSchema;
+  status: 200;
+};
+
+export type accountEndpointsGetAccountResponse404 = {
+  data: OutSchemaNoneType;
+  status: 404;
+};
+
+export type accountEndpointsGetAccountResponseSuccess = accountEndpointsGetAccountResponse200 & {
+  headers: Headers;
+};
+export type accountEndpointsGetAccountResponseError = accountEndpointsGetAccountResponse404 & {
+  headers: Headers;
+};
+
+export type accountEndpointsGetAccountResponse = accountEndpointsGetAccountResponseSuccess | accountEndpointsGetAccountResponseError;
+
+export const getAccountEndpointsGetAccountUrl = (username: string) => {
+  return `/api/accounts/other/${username}`;
+};
+
+export const accountEndpointsGetAccount = async (username: string, options?: RequestInit): Promise<accountEndpointsGetAccountResponse> => {
+  const res = await fetch(getAccountEndpointsGetAccountUrl(username), {
+    ...options,
+    method: "GET",
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: accountEndpointsGetAccountResponse["data"] = body ? JSON.parse(body) : {};
+  return { data, status: res.status, headers: res.headers } as accountEndpointsGetAccountResponse;
+};
+
+/**
+ * 生成书籍大纲(流式)
+ * @summary 生成书籍大纲
+ */
+export type aiEndpointsGenerateOutlineResponse201 = {
+  data: unknown;
+  status: 201;
+};
+
+export type aiEndpointsGenerateOutlineResponse400 = {
+  data: OutSchemaNoneType;
+  status: 400;
+};
+
+export type aiEndpointsGenerateOutlineResponse403 = {
+  data: OutSchemaNoneType;
+  status: 403;
+};
+
+export type aiEndpointsGenerateOutlineResponse404 = {
+  data: OutSchemaNoneType;
+  status: 404;
+};
+
+export type aiEndpointsGenerateOutlineResponse500 = {
+  data: OutSchemaNoneType;
+  status: 500;
+};
+
+export type aiEndpointsGenerateOutlineResponseSuccess = aiEndpointsGenerateOutlineResponse201 & {
+  headers: Headers;
+};
+export type aiEndpointsGenerateOutlineResponseError = (aiEndpointsGenerateOutlineResponse400 | aiEndpointsGenerateOutlineResponse403 | aiEndpointsGenerateOutlineResponse404 | aiEndpointsGenerateOutlineResponse500) & {
+  headers: Headers;
+};
+
+export type aiEndpointsGenerateOutlineResponse = aiEndpointsGenerateOutlineResponseSuccess | aiEndpointsGenerateOutlineResponseError;
+
+export const getAiEndpointsGenerateOutlineUrl = () => {
+  return `/api/aitools/generate-outline-tool`;
+};
+
+export const aiEndpointsGenerateOutline = async (generateOutlineInSchema: GenerateOutlineInSchema, options?: RequestInit): Promise<aiEndpointsGenerateOutlineResponse> => {
+  const res = await fetch(getAiEndpointsGenerateOutlineUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(generateOutlineInSchema),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: aiEndpointsGenerateOutlineResponse["data"] = body ? JSON.parse(body) : {};
+  return { data, status: res.status, headers: res.headers } as aiEndpointsGenerateOutlineResponse;
 };
 
 /**
