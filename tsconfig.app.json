@@ -13,9 +13,38 @@
      * Note that setting allowJs false does not prevent the use
      * of JS in `.svelte` files.
      */
+    // 允许 TypeScript 编译 JavaScript 文件
     "allowJs": true,
+    // 对 JavaScript 文件进行类型检查
     "checkJs": true,
-    "moduleDetection": "force"
+    // 模块检测策略
+    "moduleDetection": "force",
+    // 严格类型检查总开关
+    "strict": true,
+    // 禁止隐式的 any 类型
+    "noImplicitAny": true,
+    // 严格的 null 和 undefined 检查
+    "strictNullChecks": true,
+    // 严格的函数类型检查
+    "strictFunctionTypes": true,
+    // 严格的 bind/call/apply 检查
+    "strictBindCallApply": true,
+    // 严格的类属性初始化检查
+    "strictPropertyInitialization": true,
+    // 禁止隐式的 this 类型
+    "noImplicitThis": true,
+    // 始终以严格模式解析代码
+    "alwaysStrict": true,
+    // 未使用的局部变量检查
+    "noUnusedLocals": true,
+    // 未使用的函数参数检查
+    "noUnusedParameters": true,
+    // 精确的可选属性类型检查
+    "exactOptionalPropertyTypes": true,
+    // 函数必须有明确的返回值
+    "noImplicitReturns": true,
+    // switch 语句的 fallthrough 检查
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }

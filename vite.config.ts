@@ -26,6 +26,18 @@ export default defineConfig({
     exclude: ["svelte"],
   },
   build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (id.includes("svelte")) {
+              return "vendor-svelte";
+            }
+            return "vendor";
+          }
+        },
+      },
+    },
     outDir: "../docker/frontend/html/dist",
     emptyOutDir: true,
   },
