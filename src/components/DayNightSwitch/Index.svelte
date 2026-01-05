@@ -21,7 +21,7 @@
 </script>
 
 <div
-  class="flex relative z-10 overflow-hidden items-center align-items-center
+  class="flex shrink-0 relative z-10 overflow-hidden items-center align-items-center
          day-night-switch cursor-pointer"
   role="button"
   tabindex="0"
