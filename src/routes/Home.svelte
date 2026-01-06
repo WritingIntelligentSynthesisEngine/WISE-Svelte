@@ -1,11 +1,13 @@
-<!-- src/App.svelte -->
+<!-- src/routes/Home.svelte -->
 <script lang="ts">
   import Navbar from "../components/Navbar.svelte";
-
-  const navbarContents: readonly string[] = ["分类", "排行", "写作"];
 </script>
 
-<Navbar contents={navbarContents} />
+<Navbar />
+
+<div class="container mx-auto px-4">
+  <h1 class="text-3xl font-bold text-center my-8">欢迎来到 WISE</h1>
+</div>
 
 <style>
   /* 全局样式 */
