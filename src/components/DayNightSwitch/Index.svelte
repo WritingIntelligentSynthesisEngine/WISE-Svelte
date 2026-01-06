@@ -42,8 +42,10 @@
   .day-night-switch {
     --box-height: 2rem;
     --box-width: calc(var(--box-height) * 2);
-    --planet-size: calc(var(--box-height) * 0.8);
-    --planet-margin: calc(var(--box-height) * 0.1);
+    --halo-height: calc(var(--box-height));
+    --halo-width: calc(var(--box-height));
+    --planet-size: calc(var(--box-height) * 0.74);
+    --planet-margin: calc(var(--box-height) * (1 - 0.74) / 2);
     --star-size: calc(var(--box-height) * 0.1);
     --near-cloud-size: calc(var(--box-height) * 1.3333);
     --far-cloud-size: calc(var(--box-height) * 1);
@@ -58,5 +60,13 @@
     clip-path: inset(0 round var(--box-height));
     font-size: calc(var(--box-height) / 10);
     border-radius: calc(var(--box-height) / 2);
+  }
+
+  .day-night-switch:hover {
+    --multiple: 1.1;
+    --halo-height: calc(var(--box-height) * var(--multiple));
+    --halo-width: calc(var(--box-height) * var(--multiple));
+    --planet-size: calc(var(--box-height) * 0.74 * var(--multiple));
+    --planet-margin: calc(var(--box-height) * (1 - 0.74 * var(--multiple)) / 2);
   }
 </style>

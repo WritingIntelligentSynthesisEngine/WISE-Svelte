@@ -21,18 +21,18 @@
   }
 
   .halo-inner {
-    height: calc(var(--box-height) * 1.2);
-    width: calc(var(--box-height) * 1.2);
+    height: calc(var(--halo-height) * 1.2);
+    width: calc(var(--halo-width) * 1.2);
   }
 
   .halo-middle {
-    height: calc(var(--box-height) * 1.42);
-    width: calc(var(--box-height) * 1.42);
+    height: calc(var(--halo-height) * 1.42);
+    width: calc(var(--halo-width) * 1.42);
   }
 
   .halo-outer {
-    height: calc(var(--box-height) * 1.66);
-    width: calc(var(--box-height) * 1.66);
+    height: calc(var(--halo-height) * 1.66);
+    width: calc(var(--halo-width) * 1.66);
   }
 
   .halo-left {

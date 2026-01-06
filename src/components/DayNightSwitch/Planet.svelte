@@ -18,7 +18,7 @@
     <div class="sun absolute rounded-full z-10" style="height: var(--planet-size); width: var(--planet-size);" class:hidden={active}></div>
 
     <!-- 月亮 -->
-    <div class="moon planet-rotate absolute rounded-full z-10" style="height: var(--planet-size); width: var(--planet-size);" class:hidden={!active}>
+    <div class="moon absolute rounded-full z-10" style="height: var(--planet-size); width: var(--planet-size);" class:hidden={!active}>
       {#each craterList as crater}
         <div
           class="moon-crater absolute rounded-full"
@@ -54,6 +54,7 @@
 
   .moon {
     background-color: rgb(195, 201, 211);
+    animation: planet-rotate 30s linear infinite;
   }
 
   .moon-crater {
@@ -65,10 +66,6 @@
     box-shadow:
       inset 0.3em 0.3em 0.3em rgba(255, 255, 255, 0.8),
       inset -0.3em -0.3em 1em rgba(0, 0, 0, 0.4);
-  }
-
-  .planet-rotate {
-    animation: planet-rotate 30s linear infinite;
   }
 
   @keyframes planet-rotate {
