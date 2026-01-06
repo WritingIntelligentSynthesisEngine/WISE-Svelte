@@ -12,16 +12,16 @@
 </script>
 
 <!-- 太阳/月亮球体 -->
-<div class="absolute rounded-full" style="height: var(--planet-size); width: var(--planet-size);">
-  <div class="planet-gradient absolute rounded-full z-50" style="height: var(--planet-size); width: var(--planet-size);" class:to-left={!active} class:to-right={active}>
+<div class="planet-size absolute rounded-full">
+  <div class="planet-size planet-gradient absolute rounded-full z-50" class:to-left={!active} class:to-right={active}>
     <!-- 太阳 -->
-    <div class="sun absolute rounded-full z-10" style="height: var(--planet-size); width: var(--planet-size);" class:hidden={active}></div>
+    <div class="planet-size planet absolute rounded-full z-10 bg-yellow-400" class:hidden={active}></div>
 
     <!-- 月亮 -->
-    <div class="moon absolute rounded-full z-10" style="height: var(--planet-size); width: var(--planet-size);" class:hidden={!active}>
+    <div class="planet-size planet absolute rounded-full z-10 bg-gray-300" class:hidden={!active}>
       {#each craterList as crater}
         <div
-          class="moon-crater absolute rounded-full"
+          class="absolute rounded-full bg-gray-400"
           style="
                 height: calc(var(--planet-size) * {crater.size});
                 width: calc(var(--planet-size) * {crater.size});
@@ -43,31 +43,24 @@
     transform: translateX(calc(var(--box-width) - var(--planet-size) - var(--planet-margin)));
   }
 
+  .planet-size {
+    height: var(--planet-size);
+    width: var(--planet-size);
+  }
+
   .planet-gradient {
     box-shadow: 0.3em 0.3em 0.5em rgba(0, 0, 0, 0.6);
     transition: transform var(--move-duration) cubic-bezier(0.26, 0.97, 0.2, 1.08);
   }
 
-  .sun {
-    background-color: rgb(243, 198, 43);
-  }
-
-  .moon {
-    background-color: rgb(195, 201, 211);
-    animation: planet-rotate 30s linear infinite;
-  }
-
-  .moon-crater {
-    background-color: rgb(145, 151, 165);
-  }
-
-  .sun,
-  .moon {
+  .planet {
     box-shadow:
       inset 0.3em 0.3em 0.3em rgba(255, 255, 255, 0.8),
       inset -0.3em -0.3em 1em rgba(0, 0, 0, 0.4);
+    animation: planet-rotate 30s linear infinite;
   }
 
+  /* 月球旋转动画 */
   @keyframes planet-rotate {
     from {
       transform: rotate(0deg);
