@@ -15,6 +15,7 @@
     size: number;
     top: string;
     left: string;
+    delay: number;
   };
 
   type Meteor = {
@@ -51,17 +52,17 @@
 
   // 星星数据
   const starList: Star[] = [
-    { id: 0, size: 1.5, top: "13%", left: "20%" },
-    { id: 1, size: 0.5, top: "28%", left: "10%" },
-    { id: 2, size: 0.7, top: "43%", left: "22%" },
-    { id: 3, size: 0.3, top: "68%", left: "15%" },
-    { id: 4, size: 0.2, top: "75%", left: "11%" },
-    { id: 5, size: 0.4, top: "78%", left: "22%" },
-    { id: 6, size: 1.3, top: "21%", left: "53%" },
-    { id: 7, size: 0.4, top: "20%", left: "42%" },
-    { id: 8, size: 0.4, top: "48%", left: "37%" },
-    { id: 9, size: 0.6, top: "53%", left: "52%" },
-    { id: 10, size: 0.8, top: "73%", left: "46%" },
+    { id: 0, size: 1.5, top: "13%", left: "20%", delay: 0.1 },
+    { id: 1, size: 0.5, top: "28%", left: "10%", delay: 0.7 },
+    { id: 2, size: 0.7, top: "43%", left: "22%", delay: 0.3 },
+    { id: 3, size: 0.3, top: "68%", left: "15%", delay: 1.1 },
+    { id: 4, size: 0.2, top: "75%", left: "11%", delay: 0.5 },
+    { id: 5, size: 0.4, top: "78%", left: "22%", delay: 0.9 },
+    { id: 6, size: 1.3, top: "21%", left: "53%", delay: 0.2 },
+    { id: 7, size: 0.4, top: "20%", left: "42%", delay: 0.8 },
+    { id: 8, size: 0.4, top: "48%", left: "37%", delay: 1.3 },
+    { id: 9, size: 0.6, top: "53%", left: "52%", delay: 0.4 },
+    { id: 10, size: 0.8, top: "73%", left: "46%", delay: 1.0 },
   ];
 
   // 流星数据
@@ -73,8 +74,8 @@
 
   // 启动白天动画(云朵摇晃)
   function startDayAnimations() {
-    shakeActive = true;
     meteorActive = false;
+    shakeActive = true;
   }
 
   // 启动夜晚动画(流星坠落)
@@ -131,7 +132,7 @@
 <!-- 星星与云朵容器 -->
 <div class="star-cloud-box absolute overflow-hidden">
   <!-- 星星容器 -->
-  <div class="star-box absolute" class:star-move={!active}>
+  <div class="star-box absolute star-twinkle" class:star-move={!active}>
     <!-- 星星 -->
     {#each starList as star}
       <div
@@ -141,6 +142,7 @@
             width: calc(var(--star-size) * {star.size});
             top: {star.top};
             left: {star.left};
+            animation-delay: {star.delay}s;
           "
       >
         <svg width="100%" height="100%" viewBox="0 0 100 100">
@@ -319,7 +321,7 @@
 
   /* 远处云朵摇晃动画 */
   .cloud-far-shake {
-    animation: cloud-far-shake 4s linear infinite;
+    animation: cloud-far-shake 5s linear infinite;
   }
 
   @keyframes cloud-far-shake {
@@ -369,6 +371,37 @@
     }
     100% {
       transform: translate(calc(var(--box-height) * -0.625), calc(var(--box-height) * (var(--meteor-vertical-offset) + 0.3))) rotate(255deg);
+    }
+  }
+
+  /* 星星闪烁效果 */
+  .star-box .star {
+    animation: star-fade 2s ease-in-out infinite;
+  }
+
+  .star-box.star-twinkle .star {
+    animation: star-twinkle 1.5s ease-in-out infinite;
+  }
+
+  @keyframes star-fade {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes star-twinkle {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scale(0.8);
     }
   }
 </style>
