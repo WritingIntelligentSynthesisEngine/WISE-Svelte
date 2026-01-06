@@ -5,16 +5,10 @@
   import NeumoButton from "./NeumoButton.svelte";
   import DayNightSwitch from "./DayNightSwitch/Index.svelte";
 
-  interface NavItem {
+  type NavItem = {
     name: string;
     path: string;
-  }
-
-  interface Props {
-    route?: { path: { pathname: string } };
-  }
-
-  let { route }: Props = $props();
+  };
 
   const navbarContents: NavItem[] = [
     { name: "分类", path: "/category" },
@@ -24,12 +18,14 @@
 
   let selectedIndex: number = $state(-1);
 
+  // 监听路由变化, 更新选中项
   $effect(() => {
-    const pathname = route?.path?.pathname ?? "/";
+    const pathname = window.location.pathname;
     const index = navbarContents.findIndex((item) => item.path === pathname);
     selectedIndex = index !== -1 ? index : -1;
   });
 
+  // 处理点击事件, 切换选中项并跳转路由
   function handleSelect(index: number): void {
     selectedIndex = index;
     goto(navbarContents[index].path);
