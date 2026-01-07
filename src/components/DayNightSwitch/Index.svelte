@@ -1,22 +1,14 @@
 <!-- src/components/DayNightSwitch/Index.svelte -->
 <script lang="ts">
+  import { theme, toggleTheme } from "../../lib/stores/theme";
+
   import Sky from "./Sky.svelte";
   import Halo from "./Halo.svelte";
   import Planet from "./Planet.svelte";
-  import { theme, toggleTheme } from "../../lib/stores/theme";
 
-  // 事件发射器
-  export let onToggle: ((event: { detail: boolean }) => void) | undefined = undefined;
-
-  // 响应式状态
   // 切换球体状态
   function toggleStatus() {
     toggleTheme();
-
-    // 触发事件
-    if (onToggle) {
-      onToggle({ detail: $theme === "dark" });
-    }
   }
 </script>
 

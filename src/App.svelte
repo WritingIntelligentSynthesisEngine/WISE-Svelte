@@ -24,10 +24,6 @@
       path: "/write",
       component: Write,
     },
-    // {
-    //   path: "*",
-    //   component: Home,
-    // },
   ];
 </script>
 
