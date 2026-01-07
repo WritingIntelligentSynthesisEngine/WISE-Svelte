@@ -10,9 +10,11 @@
 </script>
 
 <div
-  class="w-28 h-10 z-10 flex justify-center items-center rounded-full
-         neumo-button cursor-pointer transition-all duration-300 ease-in-out
-         bg-white dark:bg-gray-700"
+  class="
+        w-28 h-10 z-10 flex justify-center items-center rounded-full
+        neumo-button cursor-pointer transition-all duration-300 ease-in-out
+        bg-white dark:bg-gray-700
+      "
   class:active
   role="button"
   tabindex="0"
@@ -25,8 +27,10 @@
   }}
 >
   <p
-    class="relative z-20 font-sans font-semibold tracking-wide select-none
-           text-black dark:text-gray-300"
+    class="
+          relative z-20 font-sans font-semibold tracking-wide select-none
+          text-black dark:text-gray-300
+        "
   >
     {content}
   </p>

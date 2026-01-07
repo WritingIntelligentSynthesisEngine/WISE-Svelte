@@ -29,3 +29,16 @@
 
 <Navbar />
 <Router {routes} />
+
+<style>
+  /* 全局样式 */
+  :global(body) {
+    background-color: white;
+    color: black;
+  }
+
+  :global(.dark body) {
+    background-color: #1e2939;
+    color: white;
+  }
+</style>
