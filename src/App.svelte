@@ -2,6 +2,7 @@
 <script lang="ts">
   import { Router, type RouteConfig } from "@mateothegreat/svelte5-router";
 
+  import Navbar from "./components/Navbar.svelte";
   import Home from "./routes/Home.svelte";
   import Category from "./routes/Category.svelte";
   import Rank from "./routes/Rank.svelte";
@@ -30,4 +31,5 @@
   ];
 </script>
 
+<Navbar />
 <Router {routes} />
